@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FitMeal — Comidas hechas a la medida de tus metas</title>
+<style>
+  :root{
+    --bg: #F1F4EC;
+    --bg-alt: #E6ECDE;
+    --ink: #17261C;
+    --ink-soft: #4B5B4F;
+    --herb: #3E6A49;
+    --herb-deep: #294934;
+    --citrus: #E2622A;
+    --citrus-deep: #B84A1D;
+    --line: #C9D2C0;
+    --paper: #FBFAF4;
+    --radius-lg: 28px;
+    --radius-sm: 10px;
+    --serif: Georgia, "Iowan Old Style", "Palatino Linotype", Palatino, serif;
+    --sans: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{color:inherit;}
+  img,svg{display:block;max-width:100%;}
+
+  :focus-visible{
+    outline:3px solid var(--citrus);
+    outline-offset:3px;
+    border-radius:4px;
+  }
+
+  section{scroll-margin-top:84px;}
+
+  .wrap{
+    max-width:1120px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  /* ---------- Nav ---------- */
+  .nav{
+    position:sticky;
+    top:0;
+    z-index:20;
+    background:rgba(241,244,236,0.9);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:18px 32px;
+    max-width:1120px;
+    margin:0 auto;
+  }
+  .brand{
+    font-family:var(--serif);
+    font-size:1.5rem;
+    font-weight:700;
+    letter-spacing:0.01em;
+    color:var(--herb-deep);
+  }
+  .brand span{color:var(--citrus);}
+  .nav-links{
+    display:flex;
+    gap:36px;
+    list-style:none;
+    margin:0;
+    padding:0;
+  }
+  .nav-links a{
+    text-decoration:none;
+    color:var(--ink-soft);
+    font-size:0.98rem;
+    font-weight:500;
+    padding:6px 2px;
+    border-bottom:2px solid transparent;
+    transition:border-color 0.2s ease, color 0.2s ease;
+  }
+  .nav-links a:hover{
+    color:var(--herb-deep);
+    border-bottom-color:var(--citrus);
+  }
+  .nav-toggle{display:none;}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding:96px 0 88px;
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1.05fr 0.95fr;
+    gap:56px;
+    align-items:center;
+  }
+  .hero h1{
+    font-family:var(--serif);
+    font-size:clamp(2.6rem, 4.4vw, 3.7rem);
+    line-height:1.08;
+    margin:0 0 22px;
+    color:var(--ink);
+    max-width:14ch;
+  }
+  .hero p{
+    font-size:1.18rem;
+    color:var(--ink-soft);
+    max-width:46ch;
+    margin:0 0 34px;
+  }
+  .btn{
+    display:inline-block;
+    background:var(--citrus);
+    color:var(--paper);
+    text-decoration:none;
+    font-size:1.02rem;
+    font-weight:600;
+    padding:16px 34px;
+    border-radius:999px;
+    border:1px solid var(--citrus-deep);
+    transition:transform 0.15s ease, background 0.15s ease;
+  }
+  .btn:hover{
+    background:var(--citrus-deep);
+    transform:translateY(-1px);
+  }
+
+  .plate{
+    width:100%;
+    max-width:400px;
+    margin-left:auto;
+  }
+  .ring{
+    stroke-dasharray:565;
+    stroke-dashoffset:565;
+    animation:draw 1.4s ease-out forwards;
+  }
+  .ring--protein{animation-delay:0.15s;}
+  .ring--carbs{animation-delay:0.35s;}
+  .ring--fat{animation-delay:0.55s;}
+  @keyframes draw{
+    to{stroke-dashoffset:var(--ring-target, 90);}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .ring{animation:none; stroke-dashoffset:var(--ring-target, 90);}
+    .btn{transition:none;}
+  }
+
+  .plate-caption{
+    display:flex;
+    justify-content:center;
+    gap:22px;
+    margin-top:18px;
+    font-size:0.9rem;
+    color:var(--ink-soft);
+  }
+  .plate-caption span{
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .dot{
+    width:10px;height:10px;border-radius:50%;
+  }
+  .dot--protein{background:var(--citrus);}
+  .dot--carbs{background:var(--herb);}
+  .dot--fat{background:#8A9A8E;}
+
+  /* ---------- Planes ---------- */
+  .planes{
+    padding:88px 0 104px;
+    background:var(--bg-alt);
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+  }
+  .planes-head{
+    max-width:56ch;
+    margin-bottom:52px;
+  }
+  .planes-head h2{
+    font-family:var(--serif);
+    font-size:clamp(2rem, 3vw, 2.5rem);
+    margin:0 0 14px;
+    color:var(--ink);
+  }
+  .planes-head p{
+    color:var(--ink-soft);
+    font-size:1.05rem;
+    margin:0;
+  }
+
+  .cards{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:28px;
+  }
+  .card{
+    background:var(--paper);
+    border-radius:var(--radius-sm);
+    padding:34px 30px;
+    border-top:4px solid var(--card-accent, var(--herb));
+    box-shadow:0 1px 0 rgba(23,38,28,0.04);
+  }
+  .card:nth-child(1){--card-accent: var(--citrus);}
+  .card:nth-child(2){--card-accent: var(--herb);}
+  .card:nth-child(3){--card-accent: #8A9A8E;}
+
+  .card h3{
+    font-family:var(--serif);
+    font-size:1.4rem;
+    margin:0 0 8px;
+    color:var(--ink);
+  }
+  .card .fact{
+    display:inline-block;
+    font-size:0.92rem;
+    font-weight:600;
+    color:var(--card-accent, var(--herb));
+    margin-bottom:14px;
+  }
+  .card p{
+    color:var(--ink-soft);
+    font-size:0.98rem;
+    margin:0;
+  }
+
+  /* ---------- Footer / Contacto ---------- */
+  footer{
+    padding:56px 0 40px;
+  }
+  .footer-inner{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:20px;
+    border-top:1px solid var(--line);
+    padding-top:32px;
+  }
+  .footer-brand{
+    font-family:var(--serif);
+    font-size:1.15rem;
+    color:var(--herb-deep);
+  }
+  .footer-contact{
+    color:var(--ink-soft);
+    font-size:0.95rem;
+  }
+  .footer-contact a{
+    color:var(--herb-deep);
+    text-decoration:underline;
+  }
+  .copyright{
+    width:100%;
+    margin-top:26px;
+    font-size:0.85rem;
+    color:var(--ink-soft);
+  }
+
+  @media (max-width: 860px){
+    .hero-grid{
+      grid-template-columns:1fr;
+    }
+    .plate{margin:0 auto;max-width:280px;}
+    .cards{grid-template-columns:1fr;}
+    .nav-links{gap:22px;}
+  }
+
+  @media (max-width: 520px){
+    .wrap{padding:0 20px;}
+    .nav-inner{padding:16px 20px;}
+    .nav-links{gap:16px;}
+    .nav-links a{font-size:0.9rem;}
+    .hero{padding:56px 0 60px;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="brand">Fit<span>Meal</span></div>
+    <ul class="nav-links">
+      <li><a href="#inicio">Inicio</a></li>
+      <li><a href="#planes">Planes</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section id="inicio" class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <h1>Come según tu meta, no según la suerte</h1>
+      <p>FitMeal arma tus comidas a partir de tus calorías y proteína objetivo, para que cada plato empuje tu entrenamiento en la dirección correcta.</p>
+      <a href="#planes" class="btn">Ver mis planes</a>
+    </div>
+    <div>
+      <svg class="plate" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Distribución de macronutrientes en un plato">
+        <circle cx="120" cy="120" r="100" fill="none" stroke="var(--line)" stroke-width="2"></circle>
+        <circle class="ring ring--protein" style="--ring-target:140" cx="120" cy="120" r="90" fill="none" stroke="var(--citrus)" stroke-width="14" stroke-linecap="round" transform="rotate(-90 120 120)"></circle>
+        <circle class="ring ring--carbs" style="--ring-target:260" cx="120" cy="120" r="68" fill="none" stroke="var(--herb)" stroke-width="14" stroke-linecap="round" transform="rotate(-90 120 120)"></circle>
+        <circle class="ring ring--fat" style="--ring-target:390" cx="120" cy="120" r="46" fill="none" stroke="#8A9A8E" stroke-width="14" stroke-linecap="round" transform="rotate(-90 120 120)"></circle>
+      </svg>
+      <div class="plate-caption">
+        <span><i class="dot dot--protein"></i>Proteína</span>
+        <span><i class="dot dot--carbs"></i>Carbohidratos</span>
+        <span><i class="dot dot--fat"></i>Grasas</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="planes" class="planes">
+  <div class="wrap">
+    <div class="planes-head">
+      <h2>Un plan para cada objetivo</h2>
+      <p>Cada plan ajusta calorías, proteína y raciones a lo que estás entrenando esta temporada.</p>
+    </div>
+    <div class="cards">
+      <article class="card">
+        <h3>Plan Volumen</h3>
+        <span class="fact">+500 kcal diarias</span>
+        <p>Comidas pensadas para ganar músculo sin acumular grasa de más, con proteína repartida en todo el día.</p>
+      </article>
+      <article class="card">
+        <h3>Plan Definición</h3>
+        <span class="fact">Déficit calculado</span>
+        <p>Reduce calorías cuidando tu masa muscular, con recetas que sacian y no te dejan con hambre.</p>
+      </article>
+      <article class="card">
+        <h3>Plan Mantenimiento</h3>
+        <span class="fact">Macros balanceados</span>
+        <p>Sostiene tu rendimiento actual con comidas variadas ajustadas a tu gasto energético real.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<footer id="contacto">
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-brand">FitMeal</div>
+      <div class="footer-contact">Escríbenos a <a href="mailto:hola@fitmeal.mx">hola@fitmeal.mx</a></div>
+    </div>
+    <p class="copyright">© 2026 FitMeal. Todos los derechos reservados.</p>
+  </div>
+</footer>
+
+</body>
+</html>
