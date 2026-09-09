@@ -237,6 +237,79 @@
     margin:0;
   }
 
+  /* ---------- Cómo funciona ---------- */
+  .como{
+    padding:88px 0 96px;
+  }
+  .steps{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:36px;
+    position:relative;
+  }
+  .steps::before{
+    content:"";
+    position:absolute;
+    top:28px;
+    left:12%;
+    right:12%;
+    height:2px;
+    background:var(--line);
+    z-index:0;
+  }
+  .step{
+    position:relative;
+    z-index:1;
+  }
+  .step-badge{
+    width:56px;
+    height:56px;
+    border-radius:50%;
+    background:var(--paper);
+    border:2px solid var(--step-accent, var(--herb));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    margin-bottom:20px;
+  }
+  .step-badge svg{
+    width:26px;
+    height:26px;
+    stroke:var(--step-accent, var(--herb));
+  }
+  .step-number{
+    position:absolute;
+    top:-6px;
+    right:-6px;
+    width:22px;
+    height:22px;
+    border-radius:50%;
+    background:var(--step-accent, var(--herb));
+    color:var(--paper);
+    font-size:0.75rem;
+    font-weight:700;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .step:nth-child(1){--step-accent: var(--citrus);}
+  .step:nth-child(2){--step-accent: var(--herb);}
+  .step:nth-child(3){--step-accent: #8A9A8E;}
+  .step:nth-child(4){--step-accent: var(--herb-deep);}
+  .step h3{
+    font-family:var(--serif);
+    font-size:1.15rem;
+    margin:0 0 8px;
+    color:var(--ink);
+  }
+  .step p{
+    color:var(--ink-soft);
+    font-size:0.95rem;
+    margin:0;
+    max-width:26ch;
+  }
+
   /* ---------- Footer / Contacto ---------- */
   footer{
     padding:56px 0 40px;
@@ -277,6 +350,8 @@
     .plate{margin:0 auto;max-width:280px;}
     .cards{grid-template-columns:1fr;}
     .nav-links{gap:22px;}
+    .steps{grid-template-columns:repeat(2, 1fr); row-gap:44px;}
+    .steps::before{display:none;}
   }
 
   @media (max-width: 520px){
@@ -285,6 +360,7 @@
     .nav-links{gap:16px;}
     .nav-links a{font-size:0.9rem;}
     .hero{padding:56px 0 60px;}
+    .steps{grid-template-columns:1fr;}
   }
 </style>
 </head>
@@ -346,6 +422,67 @@
         <span class="fact">Macros balanceados</span>
         <p>Sostiene tu rendimiento actual con comidas variadas ajustadas a tu gasto energético real.</p>
       </article>
+    </div>
+  </div>
+</section>
+
+<section id="como-funciona" class="como">
+  <div class="wrap">
+    <div class="planes-head">
+      <h2>¿Cómo funciona?</h2>
+      <p>De tu objetivo a tu plato en cuatro pasos, sin complicaciones.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-badge">
+          <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="16" cy="16" r="12" stroke-width="2"></circle>
+            <circle cx="16" cy="16" r="6.5" stroke-width="2"></circle>
+            <circle cx="16" cy="16" r="1.6" fill="currentColor" stroke="none"></circle>
+          </svg>
+          <span class="step-number">1</span>
+        </div>
+        <h3>Elige tu objetivo</h3>
+        <p>Volumen, definición o mantenimiento.</p>
+      </div>
+      <div class="step">
+        <div class="step-badge">
+          <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <line x1="6" y1="10" x2="26" y2="10" stroke-width="2"></line>
+            <circle cx="19" cy="10" r="2.4" fill="currentColor" stroke="none"></circle>
+            <line x1="6" y1="16" x2="26" y2="16" stroke-width="2"></line>
+            <circle cx="12" cy="16" r="2.4" fill="currentColor" stroke="none"></circle>
+            <line x1="6" y1="22" x2="26" y2="22" stroke-width="2"></line>
+            <circle cx="21" cy="22" r="2.4" fill="currentColor" stroke="none"></circle>
+          </svg>
+          <span class="step-number">2</span>
+        </div>
+        <h3>Personaliza tus necesidades</h3>
+        <p>Ajustamos calorías, proteínas y macronutrientes.</p>
+      </div>
+      <div class="step">
+        <div class="step-badge">
+          <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M7 15h18a9 9 0 0 1-18 0Z" stroke-width="2" stroke-linejoin="round"></path>
+            <path d="M12 15c0-3 1.5-4.5 1.5-6.5" stroke-width="1.6" stroke-linecap="round"></path>
+            <path d="M17 15c0-3.4 1.7-5 1.7-7.5" stroke-width="1.6" stroke-linecap="round"></path>
+          </svg>
+          <span class="step-number">3</span>
+        </div>
+        <h3>Recibe tus comidas</h3>
+        <p>Creamos un plan de comidas adaptado a ti.</p>
+      </div>
+      <div class="step">
+        <div class="step-badge">
+          <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M8 20l5-5 4 4 7-8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M19 11h5v5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+          <span class="step-number">4</span>
+        </div>
+        <h3>Alcanza tus metas</h3>
+        <p>Sigue tu plan y progresa de forma constante.</p>
+      </div>
     </div>
   </div>
 </section>
